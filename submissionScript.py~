@@ -74,7 +74,6 @@ def runMessages():
 
 def main():
     ret;
-    messagesSent;
     startTime = int(time.time())
     # startTime = 1642060858
     # endTime = 1644393122
@@ -83,14 +82,9 @@ def main():
     while((ret!="y")&&(ret!="n")):
         ret = input("Please type 'y' or 'n'")
     if(ret='y'):
-        messagesSent = true;
         runMessages()
 
     endTime = int(time.time())
-
-    ret = input("Retrieve messages? (y/n)");
-    while((ret!="y")&&(ret!="n")):
-        ret = input("Please type 'y' or 'n'")
 
     print("Getting data\n")
     DMSData = getData(startTime,endTime)
