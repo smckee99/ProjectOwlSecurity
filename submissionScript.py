@@ -1,7 +1,7 @@
 import grequests
 from getDMSData import *
 import json
-import time
+import datetime
 
 
 """___________ Configuration ___________"""
@@ -74,7 +74,7 @@ def runMessages(debugOut):
 
 def main():
     messagesSent = False
-    startTime = int(time.time())
+    startTime = int(datetime.datetime.utcnow().timestamp())
     debugOut = open(debugOutput,"w")
     # startTime = 1642060858
     # endTime = 1644393122
@@ -88,7 +88,7 @@ def main():
         messagesSent = True
         runMessages(debugOut)
 
-    endTime = int(time.time())
+    endTime = int(datetime.datetime.utcnow().timestamp())
 
     ret = input("Retrieve messages? (y/n)")
     while((ret!="y") and (ret!="n")):
@@ -103,8 +103,9 @@ def main():
         print("Getting data\n")
         DMSData = getData(startTime,endTime)
         print("Done with data\n")
-    elif messagesSent:
-        debugOut.write("Start time: "+startTime + "\nEnd time: "+endTime)
+
+    if messagesSent:
+        debugOut.write("Start time: "+str(startTime) + "\nEnd time: "+(endTime))
         
 
 if __name__ == '__main__':
