@@ -48,7 +48,7 @@ def submitMessages(numClients,numMessages,ID,debugOut):
                             "message" : "message number " + str(i)})
             dataOut.write("Message:\t"+"message number " + str(i)+"\n")
 
-        rs = (grequests.post(url,json=p,timeout=2) for p in values)
+        rs = (grequests.post(url,params=p,timeout=2) for p in values)
         ret = grequests.map(rs)
 
         debugOut.write("Message #"+str(i)+"\n")
@@ -104,7 +104,7 @@ def main():
         DMSData = getData(startTime,endTime)
         print("Done with data\n")
     elif messagesSent:
-        dataOut.write("Start time: "+startTime + "\nEnd time: "+endTime)
+        debugOut.write("Start time: "+startTime + "\nEnd time: "+endTime)
         
 
 if __name__ == '__main__':
