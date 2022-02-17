@@ -6,7 +6,7 @@ import time
 from submissionScript import *
 
 """___________ Configuration ___________"""
-actualOutput = "actual.out"
+actualOutput = "DMSData.out"
 
 def writeToFile(dataRet):
     dataOut = open(actualOutput,"w")
@@ -15,7 +15,7 @@ def writeToFile(dataRet):
     for element in dataRet.json():
         #first check to be sure that the event is not a status update (we dont care about those rn)
         eventType = element["eventType"]
-        if(eventType!="status"):
+        if(eventType=="portal"):
             payload = re.split(',|{|{',element["payload"])
             message = re.split(':',payload[3])[1][7:-2]
             dataOut.write("Message:\t"+message+"\n")
@@ -60,8 +60,7 @@ def getData(startTime,endTime):
     #get the data?
     dataRet = requests.get(dataUrl+timeAppend,headers=tokenHeader)
 
-    print("response: "+str(dataRet.status_code) +" and raw: " +str(dataRet.raw))
-    #print(dataRet.json())
+    print(dataRet.json())
     dataOut.write(str(dataRet.json()))
 
     writeToFile(dataRet)

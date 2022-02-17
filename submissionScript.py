@@ -9,7 +9,7 @@ import time
 # numMessages = 10 #Change this to modify number of messages sent by each client
 # ID = ""
 expectedOutput = "expected.out"
-debugOutput = "debug.out"
+debugOutput = "debug.txt"
 
 
 def getClients():
@@ -33,10 +33,10 @@ def getWaitTime():
 
     return int(waitTime)
 
-def submitMessages(numClients,numMessages,ID):
+def submitMessages(numClients,numMessages,ID,debugOut):
     url = "http://192.168.1.1/formSubmit.json"
     dataOut = open(expectedOutput,"w")
-    debugOut = open(debugOutput,"w")
+    
 
     i = 1 
     j = 0
@@ -60,41 +60,52 @@ def submitMessages(numClients,numMessages,ID):
         debugOut.write("\n\n")
 
 
-def runMessages():
+def runMessages(debugOut):
     numClients = getClients()
     numMessages = getNumMessages()
     ID = getID()
     timeToWait = getWaitTime()
 
     print("Submitting messages\n")
-    submitMessages(numClients,numMessages,ID)
+    submitMessages(numClients,numMessages,ID,debugOut)
     print("Done submitting\n")
     time.sleep(timeToWait)
 
 
 def main():
-    ret;
-    messagesSent;
+    messagesSent = False
     startTime = int(time.time())
+    debugOut = open(debugOutput,"w")
     # startTime = 1642060858
     # endTime = 1644393122
     
-    ret = input("Send messages? (y/n)");
-    while((ret!="y")&&(ret!="n")):
+    ret = input("Send messages? (y/n)")
+    while((ret!="y") and (ret!="n")):
         ret = input("Please type 'y' or 'n'")
-    if(ret='y'):
-        messagesSent = true;
-        runMessages()
+
+    if(ret == 'y'):
+        input("Please ensure you are connected to DuckLink. [Press enter to continue]")
+        messagesSent = True
+        runMessages(debugOut)
 
     endTime = int(time.time())
 
-    ret = input("Retrieve messages? (y/n)");
-    while((ret!="y")&&(ret!="n")):
+    ret = input("Retrieve messages? (y/n)")
+    while((ret!="y") and (ret!="n")):
         ret = input("Please type 'y' or 'n'")
 
-    print("Getting data\n")
-    DMSData = getData(startTime,endTime)
-    print("Done with data\n")
+    if(ret == 'y'): 
+        input("Please ensure you are connected to normal network. [Press enter to continue]")
+        #Start time and end time won't make sense if we didnt send messages, so ask user for time
+        if(not messagesSent):
+            startTime = input("Please input start time of when to retrieve messages (Unix format)")
+            endTime = input("Please input end time of when to retrieve messages (Unix format)")
+        print("Getting data\n")
+        DMSData = getData(startTime,endTime)
+        print("Done with data\n")
+    else if messagesSent:
+        dataOut.write("Start time: "+startTime + "\nEnd time: "+endTime)
+        
 
 if __name__ == '__main__':
     main()
