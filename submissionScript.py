@@ -37,6 +37,7 @@ def getWaitTime():
 def submitMessages(numClients,numMessages,ID,debugOut):
     url = "http://192.168.1.1/formSubmit.json"
     dataOut = open(expectedOutput,"w")
+    timeBetweenMessages = int(input("Enter time to wait between messages (s): "))
     
 
     i = 1 
@@ -59,7 +60,7 @@ def submitMessages(numClients,numMessages,ID,debugOut):
                 debugOut.write("\tTime elapsed: "+str(response.elapsed)+ "\n") 
 
         debugOut.write("\n\n")
-
+        time.sleep(timeBetweenMessages)
 
 def runMessages(debugOut):
     numClients = getClients()

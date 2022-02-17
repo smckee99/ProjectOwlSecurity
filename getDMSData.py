@@ -11,6 +11,7 @@ actualOutput = "DMSData.out"
 def writeToFile(dataRet):
     dataOut = open(actualOutput,"w")
     counter = 0
+    messages =[]
 
     for element in dataRet.json():
         #first check to be sure that the event is not a status update (we dont care about those rn)
@@ -18,8 +19,12 @@ def writeToFile(dataRet):
         if(eventType=="portal"):
             payload = re.split(',|{|{',element["payload"])
             message = re.split(':',payload[3])[1][7:-2]
-            dataOut.write("Message:\t"+message+"\n")
+            messages.add(message)
+            #dataOut.write("Message:\t"+message+"\n")
 
+    #iterate through list in reverse
+    for message in range(len(messages) -1,-1,-1) :
+        dataOut.write("Message:\t"+message+"\n")
             
             
 
