@@ -19,12 +19,12 @@ def writeToFile(dataRet):
         if(eventType=="portal"):
             payload = re.split(',|{|{',element["payload"])
             message = re.split(':',payload[3])[1][7:-2]
-            messages.add(message)
+            messages.append(message)
             #dataOut.write("Message:\t"+message+"\n")
 
     #iterate through list in reverse
-    for message in range(len(messages) -1,-1,-1) :
-        dataOut.write("Message:\t"+message+"\n")
+    for i in range(len(messages) -1,-1,-1) :
+        dataOut.write("Message:\t"+messages[i]+"\n")
             
             
 
@@ -33,8 +33,6 @@ def getData(startTime,endTime):
     fileOutput = "actualOut"
     dataOut = open(fileOutput,"w")
     """
-    username = input("Enter DMS username: ")
-    password = getpass.getpass("Enter DMS password: ")
     duckID = input("Enter Papa Duck ID: ")
     """
     #Hardcoded for testing
@@ -65,7 +63,7 @@ def getData(startTime,endTime):
     #get the data?
     dataRet = requests.get(dataUrl+timeAppend,headers=tokenHeader)
 
-    print(dataRet.json())
+    # print(dataRet.json())
     dataOut.write(str(dataRet.json()))
 
     writeToFile(dataRet)
