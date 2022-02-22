@@ -77,6 +77,7 @@ def runMessages(debugOut):
 def main():
     messagesSent = False
     startTime = int(calendar.timegm(time.gmtime()))
+    time.sleep(5) #sometimes if you are running scripts, it will take less than a second to send first data
     debugOut = open(debugOutput,"w")
     # startTime = 1642060858
     # endTime = 1644393122

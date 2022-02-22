@@ -30,13 +30,10 @@ def writeToFile(dataRet):
 
 def getData(startTime,endTime):
     tokenUrl = "https://owl-dms-api.us-south.cf.appdomain.cloud/api/users/authenticate"
-    """
-    duckID = input("Enter Papa Duck ID: ")
-    """
-    #Hardcoded for testing
+
+    duckID = input("Enter Papa duck ID: ")
     username = input("Enter DMS Username: ")
     password = getpass.getpass("Enter DMS password: ")
-    duckID = "CalPolyPapa001"
 
     # startTime = 1581234722
     # endTime = 1644393122
@@ -60,8 +57,5 @@ def getData(startTime,endTime):
 
     #get the data?
     dataRet = requests.get(dataUrl+timeAppend,headers=tokenHeader)
-
-    # print(dataRet.json())
-    dataOut.write(str(dataRet.json()))
 
     writeToFile(dataRet)
