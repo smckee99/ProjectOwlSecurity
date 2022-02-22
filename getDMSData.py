@@ -30,8 +30,6 @@ def writeToFile(dataRet):
 
 def getData(startTime,endTime):
     tokenUrl = "https://owl-dms-api.us-south.cf.appdomain.cloud/api/users/authenticate"
-    fileOutput = "actualOut"
-    dataOut = open(fileOutput,"w")
     """
     duckID = input("Enter Papa Duck ID: ")
     """
